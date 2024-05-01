@@ -3,7 +3,6 @@
 
 #include <SDL.h>
 
-
 #define INTERVAL_MS 5000
 bool relative = true;
 
@@ -66,37 +65,40 @@ int main(int argc, char* argv[])
 
 		switch (e.type) {
 		case SDL_MOUSEMOTION:
-			printf("SDL_MOUSEMOTION\n");
+			printf("SDL_MOUSEMOTION (t=%d)\n", e.common.timestamp);
 			printf("	which=%i (SDL_TOUCH_MOUSEID=%i)\n", e.motion.which, SDL_TOUCH_MOUSEID);
 			printf("	x=%i y=%i\n", e.motion.x, e.motion.y);
-			printf("	xrel=%i yrel=%i\n", e.motion.xrel, e.motion.yrel);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			printf("SDL_MOUSEBUTTONDOWN\n");
+			printf("SDL_MOUSEBUTTONDOWN (t=%d)\n", e.common.timestamp);
 			printf("	which=%i (SDL_TOUCH_MOUSEID=%i)\n", e.button.which, SDL_TOUCH_MOUSEID);
 			printf("	x=%i y=%i\n", e.button.x, e.button.y);
 			printf("	button=%i\n", e.button.button);
 			break;
 		case SDL_MOUSEBUTTONUP:
-			printf("SDL_MOUSEBUTTONUP\n");
+			printf("SDL_MOUSEBUTTONUP (t=%d)\n", e.common.timestamp);
 			printf("	which=%i (SDL_TOUCH_MOUSEID=%i)\n", e.button.which, SDL_TOUCH_MOUSEID);
 			printf("	x=%i y=%i\n", e.button.x, e.button.y);
 			printf("	button=%i\n", e.button.button);
 			break;
 		case SDL_FINGERMOTION:
-			printf("SDL_FINGERMOTION\n");
+			printf("SDL_FINGERMOTION (t=%d)\n", e.common.timestamp);
 			printf("	touchId=%i fingerId=%i\n", e.tfinger.touchId, e.tfinger.fingerId);
 			printf("	x=%i y=%i\n", (int)(e.tfinger.x * w), (int)(e.tfinger.y * h));
 			break;
 		case SDL_FINGERDOWN:
-			printf("SDL_FINGERDOWN\n");
+			printf("SDL_FINGERDOWN (t=%d)\n", e.common.timestamp);
 			printf("	touchId=%i fingerId=%i\n", e.tfinger.touchId, e.tfinger.fingerId);
 			printf("	x=%i y=%i\n", (int)(e.tfinger.x * w), (int)(e.tfinger.y * h));
 			break;
 		case SDL_FINGERUP:
-			printf("SDL_FINGERUP\n");
+			printf("SDL_FINGERUP (t=%d)\n", e.common.timestamp);
 			printf("	touchId=%i fingerId=%i\n", e.tfinger.touchId, e.tfinger.fingerId);
 			printf("	x=%i y=%i\n", (int)(e.tfinger.x * w), (int)(e.tfinger.y * h));
+			break;
+		case SDL_KEYDOWN:
+			if (e.key.keysym.sym == SDLK_ESCAPE)
+				quit = true;
 			break;
 		case SDL_QUIT:
 			quit = true;
